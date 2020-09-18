@@ -1,0 +1,8 @@
+{"message":"Title is required!","level":"error"}
+{"message":"Bookmark with is 925d62cc-fba3-4483-a4ff-c4fd31eaffe9 created","level":"info"}
+{"message":"Bookmark with id 4 not found.","level":"error"}
+{"message":"Can't delete. Bookmark with id 4 not found.","level":"error"}
+{"message":"You made an unauthorized request to path: /bookmarks/","level":"error"}
+{"message":"Got bookmarks","level":"info"}
+{"message":"Bookmark with is 9c9d986f-dfec-4156-9383-b0dc2c9356e3 created","level":"info"}
+{"message":"Deleted bookmark with id 9c9d986f-dfec-4156-9383-b0dc2c9356e3","level":"info"}
