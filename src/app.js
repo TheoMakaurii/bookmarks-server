@@ -15,7 +15,7 @@ app.use(helmet());
 app.use(cors());
 
 app.get('/', (req, res)=>{
-  res.send('hellow world!');
+  res.send('What a boring destination!!');
 });
 
 app.use(function errorHAndler(error, req, res, next){
