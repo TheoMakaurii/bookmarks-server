@@ -16,7 +16,17 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 app.use(express.json())
-// app.use(validation())
+app.use(function errorHAndler(error, req, res, next){
+    let response
+    if(NODE_ENV === 'production'){
+        response = {error: {message: 'whoops! server error'}}
+    } else{
+        console.error(error)
+        response ={message: error.message, error}
+    }
+    res.status(500).json(response)
+})
+
 
 let bookmarks = [{
   id: 12345,
@@ -29,9 +39,33 @@ app.get('/bookmarks', (req, res) => {
   res.json(bookmarks)
 })
 
+app.get('/bookmarks/:id', (req, res) => {
+  const { id } = req.params;
+  const index = bookmarks.findIndex(bookmark => bookmark.id === id);
+  if (index === -1) {
+    return res
+        .status(404)
+        .send('Bookmark not found!');
+  }
+  res.json(bookmarks[index])
+})
+
 app.post('/bookmarks', validation, (req, res)=>{
 
   const {title, url, description}= req.body;
+
+  if(!title){
+    return res
+            .status(400)
+            .send('No title was included in new bookmark!')
+  }
+
+  if(!url){
+    return res
+            .status(400)
+            .send('No URL was included in new bookmark!')
+  }
+
   const id =uuid()
 
   const bookmark ={
@@ -49,15 +83,5 @@ app.post('/bookmarks', validation, (req, res)=>{
     .json(bookmark)
 })
 
-app.use(function errorHAndler(error, req, res, next){
-    let respnonse
-    if(NODE_ENV === 'production'){
-        response = {error: {message: 'whoops! server error'}}
-    } else{
-        console.error(error)
-        respnonse ={message: error.message, error}
-    }
-    res.status(500).json(respnonse)
-})
 
 module.exports = app;
