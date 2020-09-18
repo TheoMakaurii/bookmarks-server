@@ -5,11 +5,9 @@ function validateBearerToken(req, res, next) {
     if(!authToken || authToken.split(' ').pop() !== apiToken) {
         return res
             .status(401)
-            .json({error: 'Unauthorized request'})
+            .json({error: 'Unauthorized request!!'})
     }
     next();
 }
 
-module.exports ={
-    validateBearerToken
-}
+module.exports = validateBearerToken
