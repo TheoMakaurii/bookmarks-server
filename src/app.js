@@ -35,11 +35,11 @@ let bookmarks = [{
   description: 'test data'
 }]
 
-app.get('/bookmarks', (req, res) => {
+app.get('/bookmarks', validation, (req, res) => {
   res.json(bookmarks)
 })
 
-app.get('/bookmarks/:id', (req, res) => {
+app.get('/bookmarks/:id', validation, (req, res) => {
   const { id } = req.params;
   const index = bookmarks.findIndex(bookmark => bookmark.id === id);
   if (index === -1) {
@@ -82,6 +82,25 @@ app.post('/bookmarks', validation, (req, res)=>{
     .location(`http://localhost:8000/bookmarks/`)
     .json(bookmark)
 })
+
+app.delete('/bookmarks/:id', (req, res) => {
+  const { id } = req.params;
+  const index = bookmarks.findIndex(bookmark => bookmark.id === id);
+  if (index === -1) {
+    return res
+        .status(404)
+        .send('Bookmark not found!');
+  }
+
+  bookmarks.splice(index, 1);
+
+  res.json(bookmarks)
+
+  res
+  .status(204)
+  .end();
+})
+
 
 
 module.exports = app;
